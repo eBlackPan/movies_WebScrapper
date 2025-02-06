@@ -1,23 +1,25 @@
 import csv
 
+
 def dataSet(title,date,description):
     data = []
     for i in range(0,len(title)):
-        temp = []
-        temp.append(title[i].text)
-        temp.append(date[i].text.split())
-        temp.append(description[i].text)
+        temp = [
+            title[i].text,
+            ' '.join(date[i].text.split()),
+            description[i].text.strip()
+        ]
         data.append(temp)
     return data
 
 
-
-
-
-def exportToCSV(data):
+def exportToCSV(data,encoding='utf-8'):
     fields = ["Name","Date","Description"]
-    file = open("data.csv","w")
-    csvwriter = csv.writer(file)
-    csvwriter.writerow(fields)
-    csvwriter.writerows(data)
+    file = open("data.csv","a")
+    csvwriter = csv.writer(file,lineterminator='\n')
+    try:
+        csvwriter.writerows(data)
+    except:
+        pass
+
     file.close()
